@@ -222,6 +222,15 @@
         <mxCell id="-O7Q9c80gEYb_Deh_tuQ-32" value="Don&#39;t Log In" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="376" y="703" width="79" height="30" as="geometry" />
         </mxCell>
+        <mxCell id="-O7Q9c80gEYb_Deh_tuQ-33" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="812" y="746" width="110" height="93" as="geometry" />
+        </mxCell>
+        <mxCell id="-O7Q9c80gEYb_Deh_tuQ-34" value="Logic" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="841" y="724" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="-O7Q9c80gEYb_Deh_tuQ-35" value="Text" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="837" y="746" width="60" height="30" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
