@@ -106,10 +106,10 @@
           <mxGeometry x="512" y="676" width="115" height="41" as="geometry" />
         </mxCell>
         <mxCell id="F6tcZEU1wLUHKEX0VQhd-52" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;- User login&lt;/div&gt;&lt;div&gt;-Registration&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="670.5" y="748" width="246.5" height="94" as="geometry" />
+          <mxGeometry x="670.5" y="748" width="89.5" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="F6tcZEU1wLUHKEX0VQhd-53" value="What do we want to use for authentication?" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="670.5" y="756" width="252" height="26" as="geometry" />
+        <mxCell id="F6tcZEU1wLUHKEX0VQhd-53" value="Firebase&lt;br&gt;&amp;nbsp;Authentication" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="667.5" y="748" width="97" height="41" as="geometry" />
         </mxCell>
         <mxCell id="F6tcZEU1wLUHKEX0VQhd-54" value="Authentication" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
           <mxGeometry x="668.5" y="726" width="95" height="26" as="geometry" />
@@ -158,9 +158,6 @@
         </mxCell>
         <mxCell id="-O7Q9c80gEYb_Deh_tuQ-10" value="&lt;div&gt;Data Storage (Local)&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
           <mxGeometry x="1143.5" y="1038" width="129" height="26" as="geometry" />
-        </mxCell>
-        <mxCell id="-O7Q9c80gEYb_Deh_tuQ-13" value="Accounts" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="1153.5" y="1088" width="78" height="68" as="geometry" />
         </mxCell>
         <mxCell id="-O7Q9c80gEYb_Deh_tuQ-14" value="Itineries" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="1261.5" y="1088" width="87" height="69" as="geometry" />
