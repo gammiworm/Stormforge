@@ -1,28 +1,54 @@
-import openai
-from flask import Flask, request, jsonify
+import os
+import matplotlib.pyplot as plt
+import psycopg2
+from dotenv import load_dotenv
 
-app = Flask(__name__)
+load_dotenv()
+DATABASE_URL = os.getenv("DATABASE_URL")
 
-# Set your OpenAI API key here
-openai.api_key = 'your-openai-api-key'
+def fetch_x():
+    try: 
+        conn = psycopg2.connect(DATABASE_URL)
 
-@app.route('/generate', methods=['POST'])
-def generate_text():
-    data = request.json
-    prompt = data.get('prompt', '')
+        cur = conn.cursor()
+        cur.execute("SELECT x_value FROM datapoint;")
+        xValue = cur.fetchall()
+    except:
+        print ("Error")
+    
+    return xValue
 
-    if not prompt:
-        return jsonify({'error': 'Prompt is required'}), 400
+def fetch_y():
+    try: 
+        conn = psycopg2.connect(DATABASE_URL)
 
-    try:
-        response = openai.Completion.create(
-            engine="davinci-codex",
-            prompt=prompt,
-            max_tokens=150
-        )
-        return jsonify(response.choices[0].text.strip())
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        cur = conn.cursor()
+        cur.execute("SELECT y_value FROM datapoint;")
+        yValue = cur.fetchall()
+    except:
+        print ("Error")
+    
+    return yValue
 
-if __name__ == '__main__':
-    app.run(debug=True)
+
+def main():
+    x = []
+    y = []
+    
+    xValue = fetch_x()
+    yValue = fetch_y()
+    size=len(xValue)
+    
+    for row in size:
+        x[row]=xValue[row][0]
+        y[row]=yValue[row][0]
+    plt.scatter(x, y, color='red')
+
+    plt.xlabel("X-axis")
+    plt.ylabel("Y-axis")
+    plt.title("Scatter Plot Example")
+
+    plt.show()
+
+
+
