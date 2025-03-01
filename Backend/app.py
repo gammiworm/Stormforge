@@ -1,18 +1,23 @@
 import os
 import matplotlib.pyplot as plt
 import psycopg2
+import numpy as np
 from psycopg2 import pool
 from dotenv import load_dotenv
 
+# Load the environment variables
 load_dotenv()
+# Get the database URL from the environment variables
 DATABASE_URL = os.getenv("DATABASE_URL")
-
-connection_pool = pool.SimpleConnectionPool(1, 20, DATABASE_URL)
-
+# Create a connection pool
+connection_pool = pool.SimpleConnectionPool(1, 10, dsn=DATABASE_URL, sslmode='require')
+# Check if the connection pool was created successfully
 if(connection_pool):
     print("Connection Pool created successfully")
 
 
+#Select all x values from the dataset
+#return a list of tuples of x values in the form x[row number][0]
 def fetch_x():
     try: 
         conn = connection_pool.getconn()
@@ -30,6 +35,8 @@ def fetch_x():
     
     return xValue
 
+#Select all y values from the dataset
+#return a list of tuples of y values in the form y[row number][0]
 def fetch_y():
     try: 
         conn = connection_pool.getconn()
@@ -47,6 +54,8 @@ def fetch_y():
     
     return yValue
 
+#Insert a new point into the dataset
+#return a string indicating the point was successfully inserted
 def insert_point(x, y):
     try: 
         conn = connection_pool.getconn()
@@ -64,7 +73,8 @@ def insert_point(x, y):
         
     return "successfully inserted point"
 
-
+#Update a point in the dataset
+#return a string indicating the point was successfully updated
 def update_point(id, x, y):
     try: 
         conn = connection_pool.getconn()
@@ -82,6 +92,8 @@ def update_point(id, x, y):
     
     return "successfully updated point " + id
 
+#Delete a point from the dataset
+#return a string indicating the point was successfully deleted
 def delete_point(id):
     try: 
         conn = connection_pool.getconn()
@@ -118,7 +130,7 @@ def mean():
         
     return mean
 
-
+#returns the median as a list of size 1 with x and y called median
 def median():
     try: 
         conn = connection_pool.getconn()
@@ -133,7 +145,7 @@ def median():
         count = cur.fetchone()[0]
         
         if(count % 2 == 0):
-            cur.execute("SELECT x_value, y_value FROM datapoint WHERE id = %s OR id = %s ORDER BY id;", ((count//2,) ((count+1)//2,)))
+            cur.execute("SELECT x_value, y_value FROM datapoint WHERE id = %s OR id = %s ORDER BY id;", (count//2, (count+1)//2,))
             medianlist = cur.fetchall()
             median = [(medianlist[0][0] + medianlist[1][0])/2, (medianlist[0][1] + medianlist[1][1])/2]
         else:
@@ -195,7 +207,6 @@ def best_fit():
     return m, b
 
 
-
 def main():
     x = []
     y = []
@@ -205,12 +216,15 @@ def main():
     size=len(xValue)
     
     for row in range(size):
-        x[row]=xValue[row][0]
-        y[row]=yValue[row][0]
-    plt.scatter(x, y, color='red')
+        x.append(np.array(xValue[row][0]))
+        y.append(np.array(yValue[row][0]))
+    plt.plot(x, y)
 
     plt.xlabel("X-axis")
     plt.ylabel("Y-axis")
-    plt.title("Scatter Plot Example")
+    plt.title("Plot Example")
 
     plt.show()
+
+
+main()
