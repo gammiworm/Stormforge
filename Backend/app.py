@@ -176,34 +176,8 @@ def mode():
         
     return mode
 
-def best_fit():
-    try: 
-        conn = connection_pool.getconn()
-    
-        if (conn):
-            print("connected")   
-            
-        cur = conn.cursor()
-        cur.execute("SELECT COUNT(id) FROM datapoint;")
-        count = cur.fetchone()[0]
-        
-        cur.execute("SELECT x_value, y_value FROM datapoint;")
-        points = cur.fetchall()
-        
-        bestfit = []
-        means = mean()
-        for i in range(count):
-            bestfit[i] = [points[0][i]- means[0], points[1][i]- means[1]] ## list of differences between the point and the mean
-        
-
-        m = (count*sum[3] - sum[0]*sum[1]) / (count*sum[2] - sum[0]*sum[0])
-        b = (sum[1] - m*sum[0]) / count
-        
-        cur.close()
-        connection_pool.putconn(conn)
-    except:
-        print ("best fit line Error")
-        
+def best_fit(x, y):
+    m, b = np.polyfit(x, y, deg=1)
     return m, b
 
 
@@ -218,7 +192,12 @@ def main():
     for row in range(size):
         x.append(np.array(xValue[row][0]))
         y.append(np.array(yValue[row][0]))
-    plt.plot(x, y)
+
+    m, b = best_fit(x, y)
+    xseq = np.linspace(0, 10, num=100)
+    plt.scatter(x, y)
+    plt.plot(b + m*xseq)
+
 
     plt.xlabel("X-axis")
     plt.ylabel("Y-axis")
