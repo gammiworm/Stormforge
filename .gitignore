@@ -1,0 +1,6 @@
+#ignoring .env file
+.env
+/node_modules
+/node_modules/@sinclair
+/node_modules/@sinclair/typebox
+/node_modules/@sinclair/typebox/errors
