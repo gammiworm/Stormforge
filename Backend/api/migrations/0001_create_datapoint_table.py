@@ -5,7 +5,7 @@ from django.db import migrations, connection
 def create_datapoint_table(apps, schema_editor):
     with connection.cursor() as cursor:
         cursor.execute("""
-            CREATE TABLE datapoint (
+            CREATE TABLE IF NOT EXISTS datapoint (
                 id SERIAL PRIMARY KEY,
                 x_value FLOAT NOT NULL,
                 y_value FLOAT NOT NULL,
@@ -16,7 +16,7 @@ def create_datapoint_table(apps, schema_editor):
 def create_dataset_table(apps, schema_editor):
     with connection.cursor() as cursor:
         cursor.execute("""
-            CREATE TABLE dataset (
+            CREATE TABLE IF NOT EXISTS dataset (
                 id SERIAL PRIMARY KEY,
                 name VARCHAR(255) NOT NULL,
                 description TEXT
