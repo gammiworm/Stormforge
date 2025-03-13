@@ -1,20 +1,18 @@
-from django.shortcuts import render
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 import json
 from config import connection_pool
 
-
+@csrf_exempt
 def handleCRUD(request):
     if request.method == "POST":
         try:
             data = json.loads(request.body)
+            print(f"Received data: {data}")
 
             operation = data.get("operation")  # e.g., "create", "read", "update", "delete"
             metadata = data.get("metadata", {})
 
-            user_id = metadata.get("userId")
-            timestamp = metadata.get("timestamp")
-            dataset_id = metadata.get("datasetId")
             changes = metadata.get("changes")
 
             # Process CRUD based on operation
@@ -31,6 +29,7 @@ def handleCRUD(request):
                     conn.commit()
                     cur.close()
                     connection_pool.putconn(conn)
+                    print("Data point inserted successfully")
                 except Exception as e:
                     print(f"Creation Error: {e}")
                     return JsonResponse({"error": "Insert Error"}, status=500)
@@ -52,6 +51,7 @@ def handleCRUD(request):
                     conn.commit()
                     cur.close()
                     connection_pool.putconn(conn)
+                    print("Data point updated successfully")
                 except Exception as e:
                     print(f"Update Error: {e}")
                     return JsonResponse({"error": "Update Error"}, status=500)
@@ -68,14 +68,12 @@ def handleCRUD(request):
                     conn.commit()
                     cur.close()
                     connection_pool.putconn(conn)
+                    print("Data point deleted successfully")
                 except Exception as e:
                     print(f"Delete Error: {e}")
                     return JsonResponse({"error": "Delete Error"}, status=500)
                 return JsonResponse({"success": True, "message": "Successfully deleted point"})
-            else:
-                return JsonResponse({"error": "Invalid operation"}, status=400)
-
-        except json.JSONDecodeError:
-            return JsonResponse({"error": "Invalid JSON"}, status=400)
-
-    return JsonResponse({"error": "Invalid request method"}, status=405)
+        except Exception as e:
+            print(f"Error: {e}")
+            return JsonResponse({"error": "Invalid request"}, status=400)
+    return JsonResponse({"error": "Invalid method"}, status=405)
