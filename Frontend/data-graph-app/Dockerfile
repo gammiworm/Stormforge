@@ -1,5 +1,5 @@
 # Use the official Node.js image from the Docker Hub
-FROM node:18-alpine
+FROM node:14
 
 # Set the working directory
 WORKDIR /app
@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install
+RUN npm install react-chartjs-2 chart.js
 
 # Copy the rest of the application code
 COPY . .

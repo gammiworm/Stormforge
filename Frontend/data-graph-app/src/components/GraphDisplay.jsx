@@ -1,26 +1,31 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { fetchDataPoints } from "../apiService";
+import ChartComponent from "./ChartComponent.jsx";
 
-const GraphDisplay = ({ dataPoints }) => {
-  const [graphUrl, setGraphUrl] = useState(null);
+const GraphDisplay = () => {
+  const [dataPoints, setDataPoints] = useState([]);
 
   useEffect(() => {
-    if (dataPoints.length === 0) return;
+    const getDataPoints = async () => {
+      try {
+        const data = await fetchDataPoints();
+        setDataPoints(data);
+      } catch (error) {
+        console.error("Error fetching data points:", error);
+      }
+    };
 
-    axios
-      .post("http://localhost:5000/generate-graph", { data: dataPoints })
-      .then((response) => {
-        setGraphUrl(response.data.imageUrl); // Backend should return an image URL
-      })
-      .catch((error) => {
-        console.error("Error fetching graph:", error);
-      });
-  }, [dataPoints]);
+    getDataPoints();
+  }, []);
 
   return (
     <div className="graph-display">
       <h3>Generated Graph</h3>
-      {graphUrl ? <img src={graphUrl} alt="Generated Graph" /> : <p></p>}
+      {dataPoints.length > 0 ? (
+        <ChartComponent dataPoints={dataPoints} />
+      ) : (
+        <p>No data points available</p>
+      )}
     </div>
   );
 };

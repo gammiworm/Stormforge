@@ -19,7 +19,7 @@ export const createDataPoint = async (x, y) => {
 
 export const fetchDataPoints = async () => {
     try {
-        const response = await axios.get(`${API_URL}crud/`);
+        const response = await axios.get(`${API_URL}get-data-points/`);
         return response.data;
     } catch (error) {
         console.error("Error fetching data points:", error);

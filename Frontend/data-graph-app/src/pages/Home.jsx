@@ -1,16 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DataInput from "../components/DataInput";
 import GraphDisplay from "../components/GraphDisplay";
-import AnalysisResults from "../components/AnalysisResults";
+import { fetchDataPoints } from "../apiService";
 
 const Home = () => {
   const [dataPoints, setDataPoints] = useState([]);
 
+  const refreshDataPoints = async () => {
+    try {
+      const data = await fetchDataPoints();
+      setDataPoints(data);
+    } catch (error) {
+      console.error("Error fetching data points:", error);
+    }
+  };
+
+  useEffect(() => {
+    refreshDataPoints();
+  }, []);
+
   return (
     <div className="home">
-      <DataInput setDataPoints={setDataPoints} />
+      <DataInput onDataPointCreated={refreshDataPoints} />
       <GraphDisplay dataPoints={dataPoints} />
-      <AnalysisResults dataPoints={dataPoints} />
     </div>
   );
 };

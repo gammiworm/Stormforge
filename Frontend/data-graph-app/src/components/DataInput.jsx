@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { createDataPoint } from '../apiService';
 
-const DataInput = () => {
+const DataInput = ({ onDataPointCreated }) => {
     const [xValue, setXValue] = useState('');
     const [yValue, setYValue] = useState('');
 
@@ -10,6 +10,9 @@ const DataInput = () => {
             await createDataPoint(Number(xValue), Number(yValue));
             setXValue('');
             setYValue('');
+            if (onDataPointCreated) {
+                onDataPointCreated();
+            }
         } catch (error) {
             console.error("Error creating data point:", error);
         }
