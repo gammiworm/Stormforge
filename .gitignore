@@ -1,12 +1,18 @@
 # Ignore environment variables
 .env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # Ignore node_modules directory
 /node_modules
+/Frontend/data-graph-app/node_modules
 
 # Ignore build artifacts
 /build
 /dist
+/Frontend/data-graph-app/build
 
 # Ignore logs
 *.log
@@ -54,3 +60,77 @@ venv/
 # Ignore static files
 staticfiles/
 media/
+
+# Ignore dependencies
+/Frontend/data-graph-app/.pnp
+/Frontend/data-graph-app/.pnp.js
+
+# Ignore testing
+/Frontend/data-graph-app/coverage
+
+# Ignore unnecessary backend files
+# Ignore compiled Python files
+*.pyc
+
+# Ignore local settings
+local_settings.py
+
+# Ignore backup files
+*.bak
+
+# Ignore temporary files
+*.tmp
+*.temp
+
+# Ignore cache files
+*.cache
+.cache/
+__pycache__/
+
+# Ignore secret keys
+secret_key.txt
+
+# Ignore database dumps
+*.sql
+*.dump
+
+# Ignore runtime files
+*.pid
+*.seed
+*.pid.lock
+
+# Ignore coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Ignore celery beat schedule file
+celerybeat-schedule
+
+# Ignore translations
+*.mo
+*.pot
+
+# Ignore Sphinx documentation
+docs/_build/
+
+# Ignore pyenv
+.python-version
+
+# Ignore pipenv
+Pipfile.lock
+
+# Ignore mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
