@@ -1,3 +1,56 @@
-#ignoring .env file
+# Ignore environment variables
 .env
+
+# Ignore node_modules directory
 /node_modules
+
+# Ignore build artifacts
+/build
+/dist
+
+# Ignore logs
+*.log
+logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE-specific files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore Python bytecode
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Ignore Django migrations
+**/migrations/
+
+# Ignore database files
+*.sqlite3
+
+# Ignore coverage reports
+coverage/
+*.cover
+*.coverage
+*.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.lcov
+
+# Ignore virtual environment
+venv/
+.venv/
+
+# Ignore static files
+staticfiles/
+media/
