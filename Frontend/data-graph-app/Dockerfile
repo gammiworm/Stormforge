@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install react-chartjs-2 chart.js
+RUN npm install
 
 # Copy the rest of the application code
 COPY . .
