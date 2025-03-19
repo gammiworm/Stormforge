@@ -10,8 +10,8 @@
   display: grid;
   grid-template-columns: 1fr 2fr 1fr; 
   gap: 20px;
-  width: 90%;
-  max-width: 1200px;
+  width: 162%;
+  max-width: 2160px;
   background: white;
   padding: 20px;
   border-radius: 10px;
@@ -19,7 +19,7 @@
 }
 
 
-.data-input,
+
 .graph-display,
 .analysis-results {
   background: white;
@@ -30,9 +30,13 @@
 
 .data-input {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 2px solid #ff9800;
+  flex-direction: column; /* Stack input fields vertically */
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 

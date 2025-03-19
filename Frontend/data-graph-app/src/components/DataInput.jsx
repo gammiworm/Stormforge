@@ -19,7 +19,7 @@ const DataInput = ({ onDataPointCreated }) => {
     };
 
     return (
-        <div>
+        <div className="data-input">
             <input
                 type="number"
                 placeholder="Enter x value"
