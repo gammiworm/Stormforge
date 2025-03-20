@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import DataInput from "../components/DataInput";
 import GraphDisplay from "../components/GraphDisplay";
+import AnalysisResults from "../components/AnalysisResults";
 import { fetchDataPoints } from "../apiService";
 
 const Home = () => {
@@ -16,6 +17,7 @@ const Home = () => {
   };
 
   useEffect(() => {
+    console.log("Data points:", dataPoints); // Log data points
     refreshDataPoints();
   }, []);
 
@@ -23,6 +25,7 @@ const Home = () => {
     <div className="home">
       <DataInput onDataPointCreated={refreshDataPoints} />
       <GraphDisplay dataPoints={dataPoints} />
+      <AnalysisResults dataPoints={dataPoints} />
     </div>
   );
 };

@@ -2,6 +2,29 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from config import connection_pool
+from database import mean, median, mode  # Import the functions
+
+@csrf_exempt
+def get_analysis(request):
+    if request.method == "POST":
+        try:
+            # Call the database functions
+            mean_values = mean()
+            median_values = median()
+            mode_values = mode()
+
+            # Prepare the response
+            response_data = {
+                "mean": {"x": mean_values[0], "y": mean_values[1]},
+                "median": {"x": median_values[0], "y": median_values[1]},
+                "mode": {"x": mode_values[0], "y": mode_values[1]} if mode_values else "No mode",
+            }
+
+            return JsonResponse(response_data)
+        except Exception as e:
+            print(f"Error in get_analysis: {e}")
+            return JsonResponse({"error": str(e)}, status=500)
+    return JsonResponse({"error": "Invalid method"}, status=405)
 
 @csrf_exempt
 def handleCRUD(request):

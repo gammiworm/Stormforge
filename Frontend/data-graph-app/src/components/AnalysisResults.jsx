@@ -3,32 +3,50 @@ import axios from "axios";
 
 const AnalysisResults = ({ dataPoints }) => {
   const [stats, setStats] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (dataPoints.length === 0) return;
 
+    setLoading(true);
+    setError(null);
+
     axios
-      .post("http://localhost:5000/get-analysis", { data: dataPoints })
+      .post("http://localhost:8000/api/get-analysis", { data: dataPoints })
       .then((response) => {
+        console.log("Analysis data:", response.data);
         setStats(response.data);
       })
       .catch((error) => {
         console.error("Error fetching analysis:", error);
+        setError("Failed to fetch analysis data.");
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, [dataPoints]);
 
   return (
     <div className="analysis-results">
       <h3>Analysis</h3>
-      {stats ? (
+      {loading ? (
+        <p>Loading...</p>
+      ) : error ? (
+        <p>{error}</p>
+      ) : stats ? (
         <>
-          <p>Mean: {stats.mean}</p>
-          <p>Median: {stats.median}</p>
-          <p>Standard Deviation: {stats.stdDev}</p>
-          <p>Best Fit: {stats.bestFit}</p>
+          <p>Mean: X = {stats.mean.x}, Y = {stats.mean.y}</p>
+          <p>Median: X = {stats.median.x}, Y = {stats.median.y}</p>
+          <p>
+            Mode:{" "}
+            {stats.mode === "No mode"
+              ? "No mode results"
+              : `X = ${stats.mode.x}, Y = ${stats.mode.y}`}
+          </p>
         </>
       ) : (
-        <p></p>
+        <p>No analysis data available.</p>
       )}
     </div>
   );
