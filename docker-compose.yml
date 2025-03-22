@@ -17,10 +17,10 @@ services:
 
   frontend:
     build:
-      context: ./Frontend/data-graph-app
+      context: ./Frontend
     command: npm run dev
     volumes:
-      - ./Frontend/data-graph-app:/app
+      - ./Frontend:/app
       - /app/node_modules
     ports:
       - "3000:3000"
