@@ -18,8 +18,6 @@
 *.log
 logs
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 
 # Ignore OS-specific files
 .DS_Store
@@ -40,19 +38,6 @@ __pycache__/
 # Ignore Django migrations
 **/migrations/
 
-# Ignore database files
-*.sqlite3
-
-# Ignore coverage reports
-coverage/
-*.cover
-*.coverage
-*.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.lcov
-
 # Ignore virtual environment
 venv/
 .venv/
@@ -60,10 +45,6 @@ venv/
 # Ignore static files
 staticfiles/
 media/
-
-# Ignore dependencies
-/Frontend/data-graph-app/.pnp
-/Frontend/data-graph-app/.pnp.js
 
 # Ignore testing
 /Frontend/data-graph-app/coverage
@@ -110,6 +91,9 @@ coverage.xml
 *.cover
 *.py,cover
 .hypothesis/
+coverage/
+*.cover
+*.lcov
 
 # Ignore Jupyter Notebook checkpoints
 .ipynb_checkpoints
@@ -126,9 +110,6 @@ docs/_build/
 
 # Ignore pyenv
 .python-version
-
-# Ignore pipenv
-Pipfile.lock
 
 # Ignore mypy
 .mypy_cache/
