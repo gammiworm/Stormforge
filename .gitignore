@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Ignore environment variables
 .env
 .env.local
@@ -134,3 +135,6 @@ Pipfile.lock
 .mypy_cache/
 .dmypy.json
 dmypy.json
+=======
+.DS_Store
+>>>>>>> cab9ea3 (Removed .ds_store and updated gitignore)
