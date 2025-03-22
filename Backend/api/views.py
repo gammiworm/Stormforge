@@ -2,7 +2,8 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from config import connection_pool
-from database import mean, median, mode  # Import the functions
+from database import mean, median, mode, fetch_x, fetch_y
+from app import best_fit
 
 @csrf_exempt
 def get_analysis(request):
@@ -13,11 +14,19 @@ def get_analysis(request):
             median_values = median()
             mode_values = mode()
 
+            # Fetch x and y values for best fit line
+            x_values = [x[0] for x in fetch_x()]
+            y_values = [y[0] for y in fetch_y()]
+            
+            # Calculate best fit line
+            m, b = best_fit(x_values, y_values)
+
             # Prepare the response
             response_data = {
                 "mean": {"x": mean_values[0], "y": mean_values[1]},
                 "median": {"x": median_values[0], "y": median_values[1]},
                 "mode": {"x": mode_values[0], "y": mode_values[1]} if mode_values else "No mode",
+                "bestFit": {"slope": m, "intercept": b}  # Include best fit line equation
             }
 
             return JsonResponse(response_data)

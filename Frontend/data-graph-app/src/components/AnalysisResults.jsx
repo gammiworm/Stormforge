@@ -36,13 +36,16 @@ const AnalysisResults = ({ dataPoints }) => {
         <p>{error}</p>
       ) : stats ? (
         <>
-          <p>Mean: X = {stats.mean.x}, Y = {stats.mean.y}</p>
-          <p>Median: X = {stats.median.x}, Y = {stats.median.y}</p>
+          <p><strong>Mean:</strong> X = {stats.mean.x}, Y = {stats.mean.y}</p>
+          <p><strong>Median:</strong> X = {stats.median.x}, Y = {stats.median.y}</p>
           <p>
-            Mode:{" "}
+            <strong>Mode:</strong>{" "}
             {stats.mode === "No mode"
               ? "No mode results"
               : `X = ${stats.mode.x}, Y = ${stats.mode.y}`}
+          </p>
+          <p>
+            <strong>Best Fit Line:</strong> y = {stats.bestFit.slope.toFixed(2)}x + {stats.bestFit.intercept.toFixed(2)}
           </p>
         </>
       ) : (
