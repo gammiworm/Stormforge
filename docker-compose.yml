@@ -1,14 +1,4 @@
 services:
-  db:
-    image: postgres:13
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    environment:
-      POSTGRES_DB: ${DATABASE_NAME}
-      POSTGRES_USER: ${DATABASE_USER}
-      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
-      POSTGRES_HOST_AUTH_METHOD: trust
-
   web:
     build: ./Backend
     command: python manage.py runserver 0.0.0.0:8000
@@ -16,8 +6,6 @@ services:
       - ./Backend:/app
     ports:
       - "8000:8000"
-    depends_on:
-      - db
     environment:
       DATABASE_NAME: ${DATABASE_NAME}
       DATABASE_USER: ${DATABASE_USER}
@@ -38,6 +26,3 @@ services:
       - "3000:3000"
     depends_on:
       - web
-
-volumes:
-  postgres_data:
