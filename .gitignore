@@ -7,12 +7,12 @@
 
 # Ignore node_modules directory
 /node_modules
-/Frontend/data-graph-app/node_modules
+/Frontend/node_modules
 
 # Ignore build artifacts
 /build
 /dist
-/Frontend/data-graph-app/build
+/Frontend/build
 
 # Ignore logs
 *.log
@@ -47,7 +47,7 @@ staticfiles/
 media/
 
 # Ignore testing
-/Frontend/data-graph-app/coverage
+/Frontend/coverage
 
 # Ignore unnecessary backend files
 # Ignore compiled Python files
