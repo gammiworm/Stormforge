@@ -5,7 +5,9 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ChartDataProvider } from './context/ChartDataContext';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const container = document.getElementById('root');
+const root = ReactDOM.createRoot(container as HTMLElement);
+
 root.render(
   <React.StrictMode>
     <ChartDataProvider>
