@@ -1,7 +1,13 @@
 import React from "react";
-import ChartComponent from "./ChartComponent.jsx";
+import ChartComponent from "./ChartComponent";
+import { DataPoint } from "../apiService"; // ✅ import the type
 
-const GraphDisplay = ({ dataPoints }) => {
+// Define props type
+type GraphDisplayProps = {
+  dataPoints: DataPoint[];
+};
+
+const GraphDisplay: React.FC<GraphDisplayProps> = ({ dataPoints }) => {
   return (
     <div className="graph-display">
       <h3>Generated Graph</h3>

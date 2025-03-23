@@ -1,11 +1,12 @@
+import React from "react";
 import { useState, useEffect } from "react";
 import DataInput from "../components/DataInput";
 import GraphDisplay from "../components/GraphDisplay";
 import AnalysisResults from "../components/AnalysisResults";
-import { fetchDataPoints } from "../apiService";
+import { fetchDataPoints, DataPoint } from "../apiService";
 
 const Home = () => {
-  const [dataPoints, setDataPoints] = useState([]);
+  const [dataPoints, setDataPoints] = useState<DataPoint[]>([]);
 
   const refreshDataPoints = async () => {
     try {

@@ -1,10 +1,29 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
 
-const AnalysisResults = ({ dataPoints }) => {
-  const [stats, setStats] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+import React from 'react';
+import { useEffect, useState} from "react";
+import axios from "axios";
+import { DataPoint } from "../apiService";
+
+// Define the shape of the API response
+type StatsResult = {
+  mean: { x: number; y: number };
+  median: { x: number; y: number };
+  mode: { x: number; y: number } | "No mode";
+  bestFit: {
+    slope: number;
+    intercept: number;
+  };
+};
+
+// Props type
+type AnalysisResultsProps = {
+  dataPoints: DataPoint[];
+};
+
+const AnalysisResults: React.FC<AnalysisResultsProps> = ({ dataPoints }) => {
+  const [stats, setStats] = useState<StatsResult | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (dataPoints.length === 0) return;

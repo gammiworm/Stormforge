@@ -102,7 +102,7 @@ export type DataPoint = {
     [key: string]: any; // fallback for unknown fields if needed
   };
 
-  export const createDataPoint = async (x: number, y: number): Promise<DataPoint> => {
+export const createDataPoint = async (x: number, y: number): Promise<DataPoint> => {
     try {
         const response = await axios.post(`${API_URL}crud/`, {
             operation: 'create',
