@@ -3,12 +3,12 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f8f9fa; 
+  background-color: #f8f9fa;
 }
 
 .home {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr; 
+  grid-template-columns: 1fr 2fr 1fr;
   gap: 20px;
   width: 162%;
   max-width: 2160px;
@@ -18,35 +18,9 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.graph-display{
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.data-input {
-  display: flex;
-  flex-direction: column; /* Stack input fields vertically */
-  justify-content: center; /* Center content vertically */
-  align-items: center; /* Center content horizontally */
-  background: #f9f9f9;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-
-.graph-display {
-  display: flex;
-  flex-direction: column; 
-  align-items: center; 
-  justify-content: flex-start; 
-  border: 2px solid #ff9800;
-  text-align: center; 
-}
-
-
+.graph-display,
+.data-input,
+.editable-table-container,
 .analysis-results {
   display: flex;
   flex-direction: column;
@@ -59,9 +33,18 @@
   margin-top: 20px;
 }
 
+.graph-display {
+  border: 2px solid #ff9800;
+  text-align: center;
+}
+
+.data-input h3,
+.graph-display h3,
 .analysis-results h3 {
+  text-align: center;
   margin-bottom: 15px;
   font-size: 1.5rem;
+  font-weight: bold;
   color: #333;
 }
 
@@ -71,34 +54,15 @@
   color: #555;
 }
 
-.data-input h3,
-.graph-display h3{
-  text-align: center;
-  margin-bottom: 50px;
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-
-
-button {
-  background-color: #007bff;
-  color: white;
-  padding: 8px 12px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
 .xy-input {
   display: flex;
-  gap: 10px; 
+  gap: 10px;
   justify-content: center;
-  width: 100%;
   margin-bottom: 10px;
 }
 
 .xy-input input {
-  width: 40%;
+  width: 100px;
   padding: 8px;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -106,29 +70,80 @@ button {
   font-size: 16px;
 }
 
-button:hover {
-  background-color: #0056b3;
-}
-
-input {
-  width: 100%;
-  padding: 8px;
-  margin: 5px 0;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-
+button,
 .plus-button {
   background-color: #007bff;
   color: white;
+  padding: 8px 12px;
   border: none;
-  padding: 8px;
-  font-size: 16px;
-  cursor: pointer;
   border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
   margin: 5px;
 }
 
+button:hover,
 .plus-button:hover {
   background-color: #0056b3;
+}
+
+.editable-table {
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden; /* Prevent content from overflowing the table container */
+}
+
+.editable-table table {
+  width: 100%; /* Make the table take up the full width of its container */
+  border-collapse: collapse;
+  table-layout: auto; /* Allow columns to adjust dynamically based on content */
+}
+
+.editable-table thead th {
+  position: sticky; /* Keep the header fixed */
+  top: 0;
+  background-color: #f9f9f9;
+  z-index: 1;
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.editable-table tbody {
+  overflow-y: auto; /* Enable vertical scrolling for the table body */
+  max-height: 300px; /* Limit the height of the table body */
+}
+
+.editable-table th,
+.editable-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.editable-table input {
+  width: 90%; /* Ensure input fields fit within the column */
+  padding: 4px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.editable-table button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+.editable-table button:hover {
+  background-color: #0056b3;
+}
+
+.table-container {
+  max-height: 300px; /* Limit the height of the table */
+  overflow-y: auto; /* Enable vertical scrolling */
 }

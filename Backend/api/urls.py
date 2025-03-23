@@ -6,4 +6,5 @@ urlpatterns = [
     path('crud/', handleCRUD, name='handleCRUD'),
     path('get-data-points/', get_data_points, name='get_data_points'),
     path('get-analysis', views.get_analysis, name='get_analysis'),
+    path("crud/", views.handleCRUD, name="handle_crud"),
 ]

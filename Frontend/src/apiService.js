@@ -26,3 +26,33 @@ export const fetchDataPoints = async () => {
         throw error;
     }
 };
+
+export const deleteDataPoint = async (id) => {
+    try {
+        const response = await axios.post(`${API_URL}crud/`, {
+            operation: "delete",
+            metadata: {
+                changes: { id },
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error deleting data point:", error);
+        throw error;
+    }
+};
+
+export const updateDataPoint = async (id, x, y) => {
+  try {
+    const response = await axios.post(`${API_URL}crud/`, {
+      operation: "update",
+      metadata: {
+        changes: { id, x, y },
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error updating data point:", error);
+    throw error;
+  }
+};

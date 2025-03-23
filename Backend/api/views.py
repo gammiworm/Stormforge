@@ -79,7 +79,10 @@ def handleCRUD(request):
                     if conn:
                         print("connected")
                     cur = conn.cursor()
-                    cur.execute("UPDATE datapoint SET x_value = %s, y_value = %s WHERE id = %s;", (x, y, id))
+                    cur.execute(
+                        "UPDATE datapoint SET x_value = %s, y_value = %s WHERE id = %s;",
+                        (x, y, id),
+                    )
                     conn.commit()
                     cur.close()
                     connection_pool.putconn(conn)
@@ -88,13 +91,15 @@ def handleCRUD(request):
                 except Exception as e:
                     print(f"Update Error: {e}")
                     return JsonResponse({"error": "Update Error"}, status=500)
+
             elif operation == "delete":
                 # Handle delete logic
                 id = changes.get("id")
+                print(f"Deleting data point with id: {id}")  # Debug log
+                if not id:
+                    return JsonResponse({"error": "ID is required for delete operation"}, status=400)
                 try:
                     conn = connection_pool.getconn()
-                    if conn:
-                        print("connected")
                     cur = conn.cursor()
                     cur.execute("DELETE FROM datapoint WHERE id = %s;", (id,))
                     conn.commit()
@@ -115,14 +120,16 @@ def get_data_points(request):
     if request.method == "GET":
         try:
             conn = connection_pool.getconn()
-            if conn:
-                print("connected")
             cur = conn.cursor()
-            cur.execute("SELECT x_value, y_value FROM datapoint")
+            cur.execute("SELECT id, x_value, y_value FROM datapoint")
             data_points = cur.fetchall()
             cur.close()
             connection_pool.putconn(conn)
-            return JsonResponse([{"x_value": x, "y_value": y} for x, y in data_points], safe=False)
+
+            return JsonResponse(
+                [{"id": row[0], "x_value": row[1], "y_value": row[2]} for row in data_points],
+                safe=False
+            )
         except Exception as e:
             print(f"Error fetching data points: {e}")
             return JsonResponse({"error": "Error fetching data points"}, status=500)
