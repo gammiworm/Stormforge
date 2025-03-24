@@ -10,7 +10,7 @@ const GraphDisplay = ({ dataPoints }) => {
     if (dataPoints.length === 0) return;
 
     axios
-      .post("http://localhost:8000/api/get-analysis", { data: dataPoints })
+      .get("http://localhost:8000/api/get-analysis", { data: dataPoints })
       .then((response) => {
         setBestFit(response.data.bestFit);
       })

@@ -7,7 +7,7 @@ from app import best_fit
 
 @csrf_exempt
 def get_analysis(request):
-    if request.method == "POST":  # Change this to handle POST requests
+    if request.method == "GET":  # Change this to handle POST requests
         try:
             # Call the database functions
             mean_values = mean()
