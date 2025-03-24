@@ -30,7 +30,8 @@
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
+  margin-top: 15px;
+  margin-bottom:5px;
 }
 
 .graph-display {
@@ -91,18 +92,19 @@ button:hover,
   margin-top: 20px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  overflow: hidden; /* Prevent content from overflowing the table container */
+  /*overflow: hidden; /* Prevent content from overflowing the table container */
 }
+
 
 .editable-table table {
   width: 100%; /* Make the table take up the full width of its container */
   border-collapse: collapse;
-  table-layout: auto; /* Allow columns to adjust dynamically based on content */
+  table-layout: fixed; /* Allow columns to adjust dynamically based on content */
 }
 
 .editable-table thead th {
   position: sticky; /* Keep the header fixed */
-  top: 0;
+  top: -1px;
   background-color: #f9f9f9;
   z-index: 1;
   text-align: center;
@@ -118,12 +120,24 @@ button:hover,
 .editable-table th,
 .editable-table td {
   border: 1px solid #ddd;
-  padding: 10px;
+  padding: 5px;
+  text-align: center;
+}
+
+.variable{
+  width: 100px;
+}
+
+.action{
+  width: 200px;
+}
+
+.center{
   text-align: center;
 }
 
 .editable-table input {
-  width: 90%; /* Ensure input fields fit within the column */
+  width: 40%; /* Ensure input fields fit within the column */
   padding: 4px;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -134,16 +148,31 @@ button:hover,
   background-color: #ff4d4d;
   color: white;
   border: none;
-  padding: 5px 10px;
+  padding: 3.5px 10px;
   cursor: pointer;
   margin: 0 5px;
 }
 
 .editable-table button:hover {
-  background-color: #0056b3;
+  background-color: #b30000;
 }
 
 .table-container {
   max-height: 300px; /* Limit the height of the table */
   overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.toggle-button {
+  background-color: #007bff;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.toggle-button:hover {
+  background-color: #0056b3;
 }

@@ -52,7 +52,7 @@ const EditableTable = ({ dataPoints, refreshDataPoints }) => {
     <div className="editable-table-container">
         {/* Input Fields and Button */}
       <div className="data-input">
-        <h3>Add New Data Point</h3>
+        <h3>New Data Point</h3>
         <div className="xy-input">
           <input
             type="number"
@@ -67,25 +67,25 @@ const EditableTable = ({ dataPoints, refreshDataPoints }) => {
             onChange={(e) => setNewY(e.target.value)}
           />
         </div>
-        <button onClick={handleCreate}>Add Data Point</button>
+        <button onClick={handleCreate}>Add</button>
       </div>
       
       {/* Table Component */}
       <div className="editable-table">
-        <h3>Editable Data Table</h3>
+        <h3 className="center">Data Table</h3>
         <div className="table-container">
           <table>
             <thead>
               <tr>
-                <th>X Value</th>
-                <th>Y Value</th>
-                <th>Actions</th>
+                <th className="variable">X Value</th>
+                <th className="variable">Y Value </th>
+                <th className="action">Actions</th>
               </tr>
             </thead>
             <tbody>
               {dataPoints.map((point) => (
                 <tr key={point.id}>
-                  <td>
+                  <td className="variable">
                     {editingRow === point.id ? (
                       <input
                         type="number"
@@ -96,7 +96,7 @@ const EditableTable = ({ dataPoints, refreshDataPoints }) => {
                       point.x_value
                     )}
                   </td>
-                  <td>
+                  <td className="variable">
                     {editingRow === point.id ? (
                       <input
                         type="number"
@@ -107,7 +107,7 @@ const EditableTable = ({ dataPoints, refreshDataPoints }) => {
                       point.y_value
                     )}
                   </td>
-                  <td>
+                  <td className="action">
                     {editingRow === point.id ? (
                       <>
                         <button onClick={() => handleSave(point.id)}>Save</button>
