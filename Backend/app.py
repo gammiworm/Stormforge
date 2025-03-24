@@ -1,11 +1,3 @@
-import matplotlib.pyplot as plt
-import numpy as np
-from database import fetch_x, fetch_y, mean, median, mode
-
-def best_fit(x, y):
-    m, b = np.polyfit(x, y, deg=1)
-    return m, b
-
 
 def main():
     x = []

@@ -9,24 +9,17 @@ from app import best_fit
 def get_analysis(request):
     if request.method == "GET":
         try:
-            # Call the database functions
-            mean_values = mean()
-            median_values = median()
-            mode_values = mode()
-
-            # Fetch x and y values for best fit line
-            x_values = [x[0] for x in fetch_x()]
-            y_values = [y[0] for y in fetch_y()]
-            
-            # Calculate best fit line
-            m, b = best_fit(x_values, y_values)
+            analysis_data = analysis()
 
             # Prepare the response
             response_data = {
-                "mean": {"x": mean_values[0], "y": mean_values[1]},
-                "median": {"x": median_values[0], "y": median_values[1]},
-                "mode": {"x": mode_values[0], "y": mode_values[1]} if mode_values else "No mode",
-                "bestFit": {"slope": m, "intercept": b}  # Include best fit line equation
+                "mean": {"x": analysis_data[0][0], "y": analysis_data[0][1]},
+                "median": {"x": analysis_data[1][0], "y": analysis_data[1][1]},
+                "mode": {"x": analysis_data[2][0], "y": analysis_data[2][1]} if mode_values else "No mode",
+                "bestFit": {"slope": analysis_data[3][0], "intercept": analysis_data[3][1]},
+                "interpolation": [{"x": x, "y": y} for x, y in analysis_data[4]],
+                "x_values": x_values,
+                "y_values": y_values,
             }
 
             return JsonResponse(response_data)
