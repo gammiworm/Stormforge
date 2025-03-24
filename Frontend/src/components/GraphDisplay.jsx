@@ -21,7 +21,17 @@ const GraphDisplay = ({ dataPoints }) => {
 
   return (
     <div className="graph-display">
-      <h3>Generated Graph</h3>
+      {dataPoints.length > 0 && bestFit ? (
+        <div className="chart-container">
+          <ChartComponent
+            dataPoints={dataPoints}
+            bestFit={bestFit}
+            chartType={chartType}
+          />
+        </div>
+      ) : (
+        <p>No data points available</p>
+      )}
       <div className="toggle-controls">
         <label>
           <input
@@ -43,19 +53,10 @@ const GraphDisplay = ({ dataPoints }) => {
         </label>
       </div>
 
-      {dataPoints.length > 0 && bestFit ? (
-        <div className="chart-container">
-          <ChartComponent
-            dataPoints={dataPoints}
-            bestFit={bestFit}
-            chartType={chartType}
-          />
-        </div>
-      ) : (
-        <p>No data points available</p>
-      )}
+      
     </div>
   );
 };
+
 
 export default GraphDisplay;
