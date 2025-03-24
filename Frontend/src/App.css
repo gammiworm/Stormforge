@@ -37,6 +37,18 @@
 .graph-display {
   border: 2px solid #ff9800;
   text-align: center;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.chart-container {
+  width: 100%;
+  max-width: 800px; /* Set a maximum width for the chart */
+  height: 400px; /* Set a fixed height for the chart */
+  position: relative; /* Required for Chart.js to calculate dimensions */
 }
 
 .data-input h3,

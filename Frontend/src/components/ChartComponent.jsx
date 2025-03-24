@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Chart } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -12,6 +12,8 @@ import {
 ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend);
 
 const ChartComponent = ({ dataPoints, bestFit, chartType = "scatter" }) => {
+  const chartRef = useRef(null);
+
   const xValues = dataPoints.map((point) => point.x_value);
   const yValues = dataPoints.map((point) => point.y_value);
 
@@ -27,12 +29,11 @@ const ChartComponent = ({ dataPoints, bestFit, chartType = "scatter" }) => {
       {
         label: chartType === "scatter" ? "Scatter Dataset" : "Line Dataset",
         data: dataPoints.map((point) => ({ x: point.x_value, y: point.y_value })),
-        backgroundColor: "rgba(75, 192, 192, 1)",
+        backgroundColor: chartType === "scatter" ? "rgba(75, 192, 192, 1)" : "rgba(0, 0, 0, 0)",
         borderColor: "rgba(75, 192, 192, 1)",
         borderWidth: chartType === "line" ? 2 : 0,
-        pointRadius: chartType === "scatter" ? 5 : 0,
         showLine: chartType === "line",
-        fill: false,
+        pointRadius: chartType === "scatter" ? 5 : 0,
       },
       {
         label: "Best Fit Line",
@@ -48,6 +49,7 @@ const ChartComponent = ({ dataPoints, bestFit, chartType = "scatter" }) => {
 
   const options = {
     responsive: true,
+    maintainAspectRatio: false, // Allow the chart to resize freely
     scales: {
       x: {
         type: "linear",
@@ -56,7 +58,18 @@ const ChartComponent = ({ dataPoints, bestFit, chartType = "scatter" }) => {
     },
   };
 
-  return <Chart type={chartType} data={data} options={options} />;
+  // Trigger a resize when the chart type changes
+  useEffect(() => {
+    if (chartRef.current) {
+      chartRef.current.resize();
+    }
+  }, [chartType]);
+
+  return (
+    <div className="chart-container">
+      <Chart ref={chartRef} type={chartType} data={data} options={options} />
+    </div>
+  );
 };
 
 export default ChartComponent;

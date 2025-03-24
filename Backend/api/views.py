@@ -7,7 +7,7 @@ from app import best_fit
 
 @csrf_exempt
 def get_analysis(request):
-    if request.method == "GET":
+    if request.method == "POST":  # Change this to handle POST requests
         try:
             # Call the database functions
             mean_values = mean()
@@ -33,7 +33,8 @@ def get_analysis(request):
         except Exception as e:
             print(f"Error in get_analysis: {e}")
             return JsonResponse({"error": str(e)}, status=500)
-    return JsonResponse({"error": "Invalid method"}, status=405)
+    else:
+        return JsonResponse({"error": "Method not allowed"}, status=405)
 
 @csrf_exempt
 def handleCRUD(request):
