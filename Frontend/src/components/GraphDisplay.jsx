@@ -10,7 +10,7 @@ const GraphDisplay = ({ dataPoints }) => {
 
     // Fetch best fit line data from the backend
     axios
-      .post("http://localhost:8000/api/get-analysis", { data: dataPoints })
+      .get("http://localhost:8000/api/get-analysis", { data: dataPoints })
       .then((response) => {
         setBestFit(response.data.bestFit);
       })
