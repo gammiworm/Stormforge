@@ -5,9 +5,12 @@ from config import connection_pool
 from database import mean, median, mode, fetch_x, fetch_y
 from app import best_fit
 
+if not connection_pool:
+    raise RuntimeError("Database connection pool is not initialized. Check your database configuration.")
+
 @csrf_exempt
 def get_analysis(request):
-    if request.method == "GET":  # Change this to handle POST requests
+    if request.method == "POST":  # Change this to handle POST requests
         try:
             # Call the database functions
             mean_values = mean()

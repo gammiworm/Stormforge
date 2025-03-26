@@ -188,3 +188,45 @@ button:hover,
 .toggle-button:hover {
   background-color: #0056b3;
 }
+
+.radio-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+}
+
+.radio-group input[type="radio"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #007bff;
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.radio-group input[type="radio"]:checked {
+  background-color: #007bff;
+  border-color: #0056b3;
+}
+
+.radio-group input[type="radio"]:hover {
+  border-color: #0056b3;
+}
+
+.radio-group label span {
+  margin-left: 5px;
+}

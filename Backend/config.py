@@ -8,6 +8,8 @@ load_dotenv()
 
 DATABASE_URL = os.getenv('DATABASE_URL')
 
+connection_pool = None  # Initialize the connection pool
+
 try:
     connection_pool = psycopg2.pool.SimpleConnectionPool(
         1, 20,

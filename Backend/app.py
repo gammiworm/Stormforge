@@ -29,7 +29,7 @@ def main():
     plt.ylabel("Y-axis")
     plt.title("Plot Example")
 
-    plt.show()
+    #plt.show()
 
 
 main()

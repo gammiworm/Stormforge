@@ -10,7 +10,7 @@ const GraphDisplay = ({ dataPoints }) => {
     if (dataPoints.length === 0) return;
 
     axios
-      .get("http://localhost:8000/api/get-analysis", { data: dataPoints })
+      .post("http://localhost:8000/api/get-analysis", { data: dataPoints })
       .then((response) => {
         setBestFit(response.data.bestFit);
       })
@@ -32,7 +32,7 @@ const GraphDisplay = ({ dataPoints }) => {
       ) : (
         <p>No data points available</p>
       )}
-      <div className="toggle-controls">
+      <div className="toggle-controls radio-group">
         <label>
           <input
             type="radio"
@@ -40,7 +40,7 @@ const GraphDisplay = ({ dataPoints }) => {
             checked={chartType === "scatter"}
             onChange={() => setChartType("scatter")}
           />
-          Scatter Plot
+          <span>Scatter Plot</span>
         </label>
         <label>
           <input
@@ -49,11 +49,9 @@ const GraphDisplay = ({ dataPoints }) => {
             checked={chartType === "line"}
             onChange={() => setChartType("line")}
           />
-          Line Plot
+          <span>Line Plot</span>
         </label>
       </div>
-
-      
     </div>
   );
 };
