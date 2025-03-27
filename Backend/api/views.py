@@ -24,12 +24,18 @@ def get_analysis(request):
             # Calculate best fit line
             m, b = best_fit(x_values, y_values)
 
+            # Calculate interpolation points
+            interpolated_points = quadInterpolation()
+
             # Prepare the response
             response_data = {
                 "mean": {"x": mean_values[0], "y": mean_values[1]},
                 "median": {"x": median_values[0], "y": median_values[1]},
                 "mode": {"x": mode_values[0], "y": mode_values[1]} if mode_values else "No mode",
-                "bestFit": {"slope": m, "intercept": b}  # Include best fit line equation
+                "bestFit": {"slope": m, "intercept": b},  # Include best fit line equation
+                "interpolation": [{"x": x, "y": y} for x, y in interpolated_points],
+                "x_values": x_values,
+                "y_values": y_values,
             }
 
             return JsonResponse(response_data)

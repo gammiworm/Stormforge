@@ -11,7 +11,7 @@ import {
 
 ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend);
 
-const ChartComponent = ({ dataPoints, bestFit, chartType = "scatter" }) => {
+const ChartComponent = ({ dataPoints, bestFit, interpolation, chartType = "scatter" }) => {
   const chartRef = useRef(null);
 
   const xValues = dataPoints.map((point) => point.x_value);
@@ -44,12 +44,21 @@ const ChartComponent = ({ dataPoints, bestFit, chartType = "scatter" }) => {
         pointRadius: 0,
         fill: false,
       },
+      {
+        label: "Interpolation",
+        data: interpolation.map((point) => ({ x: point.x, y: point.y })),
+        borderColor: "rgba(54, 162, 235, 1)",
+        borderWidth: 2,
+        showLine: true,
+        pointRadius: 0,
+        fill: false,
+      },
     ],
   };
 
   const options = {
     responsive: true,
-    maintainAspectRatio: false, // Allow the chart to resize freely
+    maintainAspectRatio: false,
     scales: {
       x: {
         type: "linear",
@@ -58,7 +67,6 @@ const ChartComponent = ({ dataPoints, bestFit, chartType = "scatter" }) => {
     },
   };
 
-  // Trigger a resize when the chart type changes
   useEffect(() => {
     if (chartRef.current) {
       chartRef.current.resize();
