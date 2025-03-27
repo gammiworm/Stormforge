@@ -16,26 +16,33 @@ def quadInterpolation():
         x.append(np.array(xValue[row][0]))
         y.append(np.array(yValue[row][0]))
 
+    # Sort x and y values based on x
+    sorted_indices = np.argsort(x)
+    x = np.array(x)[sorted_indices]
+    y = np.array(y)[sorted_indices]
+    
     interpolated_points = []
-    m = (y[1] - y[0]) / (x[1] - x[0])
-    f = m(x-x[0]) + y[0]
+    if(x[0] == x[1]):
+        m = (y[1]-y[0])/(0.0001) # to avoid division by zero
+    else:
+        m = (y[1] - y[0]) / (x[1] - x[0])
 
-    for i in range(size - 1):
+    for i in range(1, size - 1):
         # if x[i] == x[i+1], then it is a vertical segment
         if x[i] == x[i+1]:
-            x[i+1] += 0.0001
-            m = (y[i+1] - y[i]) / (x[i+1] - x[i])
             x_range = np.linspace(x[i], x[i+1], 50)
             y_range = m*(x_range - x[i]) + y[i]
             interpolated_points.extend(zip(x_range, y_range))
-        if x[i] != x[i+1]:
-            a = (m*(x[i+1]-x[i])+(y[i+1]-y[i]))/(x[i+1]-x[i])**2
-            b = m - 2*a*x[i+1]
-            c = y[i+1] - a*x[i+1]**2 - m*x[i+1]
-            x_range = np.linspace(x[i], x[i+1], 50)
-            y_range = a*(x_range)**2 + b*(x_range) + c
-            interpolated_points.extend(zip(x_range, y_range))
-            m = 2*a*x[i+1] + b
+            continue
+       
+    
+        a = (m*(x[i+1]-x[i])+(y[i+1]-y[i]))/(x[i+1]-x[i])**2
+        b = m - 2*a*x[i+1]
+        c = y[i+1] - a*x[i+1]**2 - m*x[i+1]
+        x_range = np.linspace(x[i], x[i+1], 50)
+        y_range = a*(x_range)**2 + b*(x_range) + c
+        interpolated_points.extend(zip(x_range, y_range))
+        m = 2*a*x[i+1] + b
 
     return interpolated_points
 
