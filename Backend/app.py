@@ -23,6 +23,7 @@ def quadInterpolation():
     
     interpolated_points = []
     if(x[0] == x[1]):
+        x[1] += 0.0001
         m = (y[1]-y[0])/(0.0001) # to avoid division by zero
     else:
         m = (y[1] - y[0]) / (x[1] - x[0])
@@ -30,15 +31,17 @@ def quadInterpolation():
     for i in range(1, size - 1):
         # if x[i] == x[i+1], then it is a vertical segment
         if x[i] == x[i+1]:
+            x[i+1] += 0.0001
+            m = (y[i+1] - y[i]) / (0.0001)
             x_range = np.linspace(x[i], x[i+1], 50)
             y_range = m*(x_range - x[i]) + y[i]
             interpolated_points.extend(zip(x_range, y_range))
             continue
        
     
-        a = (m*(x[i+1]-x[i])+(y[i+1]-y[i]))/(x[i+1]-x[i])**2
-        b = m - 2*a*x[i+1]
-        c = y[i+1] - a*x[i+1]**2 - m*x[i+1]
+        a = ((y[i+1]-y[i]) - m*(x[i+1]-x[i]))/(x[i+1]-x[i])**2
+        b = m - 2*a*x[i]
+        c = y[i+1] - a*x[i+1]**2 + 2*a*x[i]*x[i+1] - m*x[i+1]
         x_range = np.linspace(x[i], x[i+1], 50)
         y_range = a*(x_range)**2 + b*(x_range) + c
         interpolated_points.extend(zip(x_range, y_range))
