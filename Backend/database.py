@@ -1,6 +1,5 @@
 from config import connection_pool
 
-
 def fetch_x():
     try:
         conn = connection_pool.getconn()

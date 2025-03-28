@@ -12,20 +12,20 @@ if not connection_pool:
 def get_analysis(request):
     if request.method == "POST":  # Change this to handle POST requests
         try:
-            # Call the database functions
-            mean_values = mean()
-            median_values = median()
-            mode_values = mode()
-
             # Fetch x and y values for best fit line
             x_values = [x[0] for x in fetch_x()]
             y_values = [y[0] for y in fetch_y()]
+            
+            # Call the database functions
+            mean_values = mean(x_values, y_values)
+            median_values = median(x_values, y_values)
+            mode_values = mode(x_values, y_values)
             
             # Calculate best fit line
             m, b = best_fit(x_values, y_values)
 
             # Calculate interpolation points
-            interpolated_points = quadInterpolation()
+            interpolated_points = quadInterpolation(x_values, y_values)
 
             # Prepare the response
             response_data = {

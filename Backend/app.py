@@ -3,21 +3,17 @@ import numpy as np
 from database import fetch_x, fetch_y
 from config import connection_pool
 
-
-
 def best_fit(x, y):
     m, b = np.polyfit(x, y, deg=1)
     return m, b
 
-def quadInterpolation():
+def quadInterpolation(xValue, yValue):
     x = []
     y = []
-    xValue = fetch_x()
-    yValue = fetch_y()
     size=len(xValue)
     for row in range(size):
-        x.append(np.array(xValue[row][0]))
-        y.append(np.array(yValue[row][0]))
+        x.append(xValue[row])
+        y.append(yValue[row])
 
     # Sort x and y values based on x
     sorted_indices = np.argsort(x)
@@ -56,107 +52,68 @@ def quadInterpolation():
 
     return interpolated_points
 
-def mean():
-    try:
-        conn = connection_pool.getconn()
-        if conn:
-            print("connected")
-        cur = conn.cursor()
-        cur.execute("SELECT AVG(x_value), AVG(y_value) FROM datapoint;")
-        result = cur.fetchone()
+def mean(x, y):
+    # Handle empty dataset
+    if len(x)==0 or len(y)==0:
+        print("No data points available.")
+        mean = (None, None)  # Return None for both x and y if no data exists
+    else:
+        # Round the mean values to two decimal places
+        mean = (round((sum(x) / len(x)), 2), round((sum(y) / len(y)), 2))
 
-        # Handle empty dataset
-        if result is None or result[0] is None or result[1] is None:
-            print("No data points available.")
-            mean = (None, None)  # Return None for both x and y if no data exists
-        else:
-            # Round the mean values to two decimal places
-            mean = (round(result[0], 2), round(result[1], 2))
+    return mean
 
-        cur.close()
-        connection_pool.putconn(conn)
-        return mean
+def median(x, y):
+    # Get the total number of points
+    count = len(x)
+    if count == 0:
+        print("No data points available.")
+        return None  # Return None if there are no rows
 
-    except Exception as e:
-        print(f"Mean Error: {e}")
-        if conn:
-            connection_pool.putconn(conn)  # Ensure connection is returned to the pool
-        return (None, None)  # Return None in case of an error
+    # For even count, fetch the two middle rows and calculate the median
+    if count % 2 == 0:
+        medianlist =(x[(count//2)-1], y[(count//2)-1]), (x[count//2], y[count//2])
+        median = [
+            round((medianlist[0][0] + medianlist[1][0]) / 2, 2),  # Median for x_value
+            round((medianlist[0][1] + medianlist[1][1]) / 2, 2)   # Median for y_value
+        ]
+    else:
+        # For odd count, fetch the middle row
+        result = (x[count // 2], y[count // 2])  # Get the middle element
+        median = (round(result[0], 2), round(result[1], 2))  # Round the median values
 
-def median():
-    try:
-        conn = connection_pool.getconn()
-        if conn:
-            print("connected")
-        cur = conn.cursor()
+    return median
 
-        # Get the total count of rows
-        cur.execute("SELECT COUNT(*) FROM datapoint;")
-        count = cur.fetchone()[0]
 
-        if count == 0:
-            print("No data points available.")
-            return None  # Return None if there are no rows
+def mode(x, y):
+    x.sort()
+    y.sort()
+    y_count = 0
+    x_count = 0
+    x_id = None
+    y_id = None
+    temp_x_count = 0
+    temp_y_count = 0
+    for i in range(len(x)):
+        temp_x_count+=1
+        if i == len(x)-1 or x[i] != x[i+1]:
+            if temp_x_count > x_count:
+                x_count = temp_x_count
+                x_id = i
+            elif temp_x_count == x_count:
+                x_id = None
+            temp_x_count = 0
+    for i in range(len(y)):
+        temp_y_count+=1
+        if i == len(y)-1 or y[i] != y[i+1]:
+            if temp_y_count > y_count:
+                y_count = temp_y_count
+                y_id = i
+            elif temp_y_count == y_count:
+                y_id = None
+            temp_y_count = 0
+    
+    result = (x_id, y_id)
 
-        # For even count, fetch the two middle rows and calculate the median
-        if count % 2 == 0:
-            cur.execute("""
-                SELECT x_value, y_value 
-                FROM datapoint 
-                ORDER BY id 
-                LIMIT 2 OFFSET %s;
-            """, ((count // 2) - 1,))
-            medianlist = cur.fetchall()
-            median = [
-                round((medianlist[0][0] + medianlist[1][0]) / 2, 2),  # Median for x_value
-                round((medianlist[0][1] + medianlist[1][1]) / 2, 2)   # Median for y_value
-            ]
-        else:
-            # For odd count, fetch the middle row
-            cur.execute("""
-                SELECT x_value, y_value 
-                FROM datapoint 
-                ORDER BY id 
-                LIMIT 1 OFFSET %s;
-            """, (count // 2,))
-            result = cur.fetchone()
-            median = (round(result[0], 2), round(result[1], 2))  # Round the median values
+    return result
 
-        cur.close()
-        connection_pool.putconn(conn)
-        return median
-
-    except Exception as e:
-        print(f"Median Error: {e}")
-        return None
-
-def mode():
-    try:
-        conn = connection_pool.getconn()
-        if conn:
-            print("connected")
-        cur = conn.cursor()
-
-        # Query to find the mode of x_value and y_value pairs
-        cur.execute("""
-            SELECT x_value, y_value, COUNT(*)
-            FROM datapoint
-            GROUP BY x_value, y_value
-            ORDER BY COUNT(*) DESC
-            LIMIT 1;
-        """)
-        result = cur.fetchone()
-
-        # Check if there are no repeats (i.e., count is 1)
-        if result and result[2] == 1:
-            mode = None  # No mode exists
-        else:
-            mode = result[:2]  # Return x_value and y_value
-
-        cur.close()
-        connection_pool.putconn(conn)
-        return mode
-
-    except Exception as e:
-        print(f"Mode Error: {e}")
-        return None
