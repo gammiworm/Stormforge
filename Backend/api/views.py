@@ -2,8 +2,8 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from config import connection_pool
-from database import mean, median, mode, fetch_x, fetch_y
-from app import best_fit, quadInterpolation
+from database import fetch_x, fetch_y
+from app import best_fit, quadInterpolation, mean, median, mode
 
 if not connection_pool:
     raise RuntimeError("Database connection pool is not initialized. Check your database configuration.")
