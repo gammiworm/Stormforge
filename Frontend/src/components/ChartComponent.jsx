@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useRef} from "react";
 import { Scatter } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -11,7 +11,7 @@ import {
 
 ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend);
 
-const ChartComponent = ({ dataPoints, bestFit, interpolation,interpolation2, chartType = "scatter" }) => {
+const ChartComponent = ({ dataPoints, bestFit, interpolation, chartType = "scatter" }) => {
   const chartRef = useRef(null);
 
   const xValues = dataPoints.map((point) => point.x_value);
@@ -45,15 +45,6 @@ const ChartComponent = ({ dataPoints, bestFit, interpolation,interpolation2, cha
         label: "Interpolation",
         data: interpolation.map((point) => ({ x: point.x, y: point.y })),
         borderColor: "rgba(54, 162, 235, 1)",
-        borderWidth: 2,
-        showLine: true,
-        pointRadius: 0,
-        fill: false,
-      },
-      {
-        label: "Interpolation2",
-        data: interpolation2.map((point) => ({ x: point.x, y: point.y })),
-        borderColor: "rgb(27, 22, 168)",
         borderWidth: 2,
         showLine: true,
         pointRadius: 0,

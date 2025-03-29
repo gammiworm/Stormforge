@@ -5,7 +5,6 @@ import axios from "axios";
 const GraphDisplay = ({ dataPoints }) => {
   const [bestFit, setBestFit] = useState(null);
   const [interpolation, setInterpolation] = useState(null);
-  const [interpolation2, setInterpolation2] = useState(null);
 
   const [chartType, setChartType] = useState("scatter");
 
@@ -14,11 +13,10 @@ const GraphDisplay = ({ dataPoints }) => {
 
     // Fetch best fit line data from the backend
     axios
-      .get("http://localhost:8000/api/get-analysis", { data: dataPoints })
+      .post("http://localhost:8000/api/get-analysis", { data: dataPoints })
       .then((response) => {
         setBestFit(response.data.bestFit);
         setInterpolation(response.data.interpolation);
-        setInterpolation2(response.data.interpolation2);
 
       })
       .catch((error) => {
@@ -35,7 +33,6 @@ const GraphDisplay = ({ dataPoints }) => {
             dataPoints={dataPoints}
             bestFit={bestFit}
             interpolation={interpolation}
-            interpolation2={interpolation2}
             chartType={chartType}
           />
         </div>
