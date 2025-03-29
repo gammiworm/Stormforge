@@ -11,18 +11,18 @@ import {
 
 ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend);
 
-const ChartComponent = ({ dataPoints, bestFit }) => {
-    // Extract x and y values from data points
-    const xValues = dataPoints.map((point) => point.x_value);
-    const yValues = dataPoints.map((point) => point.y_value);
-  
-    // Generate best fit line points
-    const minX = Math.min(...xValues);
-    const maxX = Math.max(...xValues);
-    const bestFitLine = [
-      { x: minX, y: bestFit.slope * minX + bestFit.intercept },
-      { x: maxX, y: bestFit.slope * maxX + bestFit.intercept },
-    ];
+const ChartComponent = ({ dataPoints, bestFit, interpolation,interpolation2, chartType = "scatter" }) => {
+  const chartRef = useRef(null);
+
+  const xValues = dataPoints.map((point) => point.x_value);
+  const yValues = dataPoints.map((point) => point.y_value);
+
+  const minX = Math.min(...xValues);
+  const maxX = Math.max(...xValues);
+  const bestFitLine = [
+    { x: minX, y: bestFit.slope * minX + bestFit.intercept },
+    { x: maxX, y: bestFit.slope * maxX + bestFit.intercept },
+  ];
 
   const data = {
     datasets: [
@@ -38,6 +38,25 @@ const ChartComponent = ({ dataPoints, bestFit }) => {
         borderColor: "rgba(255, 99, 132, 1)",
         borderWidth: 2,
         showLine: true,
+        pointRadius: 0,
+        fill: false,
+      },
+      {
+        label: "Interpolation",
+        data: interpolation.map((point) => ({ x: point.x, y: point.y })),
+        borderColor: "rgba(54, 162, 235, 1)",
+        borderWidth: 2,
+        showLine: true,
+        pointRadius: 0,
+        fill: false,
+      },
+      {
+        label: "Interpolation2",
+        data: interpolation2.map((point) => ({ x: point.x, y: point.y })),
+        borderColor: "rgb(27, 22, 168)",
+        borderWidth: 2,
+        showLine: true,
+        pointRadius: 0,
         fill: false,
       },
     ],
