@@ -10,10 +10,14 @@ def best_fit(x, y):
 def quadInterpolation(xValue, yValue):
     x = []
     y = []
+    
+    xValue = [x[0] for x in fetch_x()]
+    yValue = [y[0] for y in fetch_y()]
+    
     size=len(xValue)
     for row in range(size):
-        x.append(xValue[row])
-        y.append(yValue[row])
+        x.append(np.array(xValue[row]))
+        y.append(np.array(yValue[row]))
 
     # Sort x and y values based on x
     sorted_indices = np.argsort(x)
@@ -65,6 +69,8 @@ def mean(x, y):
 
 def median(x, y):
     # Get the total number of points
+    x.sort()
+    y.sort()
     count = len(x)
     if count == 0:
         print("No data points available.")
@@ -99,7 +105,7 @@ def mode(x, y):
         if i == len(x)-1 or x[i] != x[i+1]:
             if temp_x_count > x_count:
                 x_count = temp_x_count
-                x_id = i
+                x_id = x[i]
             elif temp_x_count == x_count:
                 x_id = None
             temp_x_count = 0
@@ -108,7 +114,7 @@ def mode(x, y):
         if i == len(y)-1 or y[i] != y[i+1]:
             if temp_y_count > y_count:
                 y_count = temp_y_count
-                y_id = i
+                y_id = y[i]
             elif temp_y_count == y_count:
                 y_id = None
             temp_y_count = 0
